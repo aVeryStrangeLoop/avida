@@ -233,6 +233,7 @@ SET(MAIN_SOURCES
   ${MAIN_DIR}/cBirthNeighborhoodHandler.cc
   ${MAIN_DIR}/cBirthSelectionHandler.cc
   ${MAIN_DIR}/cBirthMatingTypeGlobalHandler.cc
+  ${MAIN_DIR}/cCluster.cc
   ${MAIN_DIR}/cContextPhenotype.cc
   ${MAIN_DIR}/cDeme.cc
   ${MAIN_DIR}/cDemeNetwork.cc
