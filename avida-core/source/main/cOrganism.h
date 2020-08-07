@@ -73,8 +73,10 @@ private:
   int m_id;                               // unique id for each org, is just the number it was born
   int m_lineage_label;                    // a lineages tag; inherited unchanged in offspring
   cLineage* m_lineage;                    // A lineage descriptor... (different from label)
-  int cclade_id;				                  // @MRR Coalescence clade information (set in cPopulation)
-
+  int cclade_id;                          // @MRR Coalescence clade information (set in cPopulation)
+  
+  bool m_adherence;                        // @BK Adherence to form clusters (organism can form clusters if true)
+  
   int m_org_list_index;
   
   sOrgDisplay* m_org_display;
@@ -191,6 +193,10 @@ public:
   bool GetPheromoneStatus() { return m_pher_drop; }
   void TogglePheromone() { m_pher_drop = (m_pher_drop == true) ? false : true; }
   void SetPheromone(bool newval) { m_pher_drop = newval; }
+
+  void EnableAdherence() { m_adherence = true; }
+  void DisableAdherence() { m_adherence = false; }
+
 
   double GetFracEnergyDonating() { return frac_energy_donating; }
   void SetFracEnergyDonating(double newval) { assert(newval >= 0); assert(newval <= 1); frac_energy_donating = newval; }

@@ -882,6 +882,10 @@ private:
   bool Inst_IfNotPheromone(cAvidaContext& ctx);
   bool Inst_DropPheromone(cAvidaContext& ctx);
 
+  // @BK Clustering support
+  bool Inst_EnableAdherence(cAvidaContext& ctx);
+  bool Inst_DisableAdherence(cAvidaContext& ctx);
+
   // -------- Opinion support --------
 public:
   /* These instructions interact with the "opinion" support in cOrganism.h.  The

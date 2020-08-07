@@ -641,7 +641,11 @@ tInstLib<cHardwareCPU::tMethod>* cHardwareCPU::initInstLib(void)
     tInstLibEntry<tMethod>("if-pheromone", &cHardwareCPU::Inst_IfPheromone),
     tInstLibEntry<tMethod>("if-not-pheromone", &cHardwareCPU::Inst_IfNotPheromone),
     tInstLibEntry<tMethod>("drop-pheromone", &cHardwareCPU::Inst_DropPheromone, INST_CLASS_ENVIRONMENT, nInstFlag::STALL),
-    
+   
+    // @BK Clustering support
+    tInstLibEntry<tMethod>("enable-adhere", &cHardwareCPU::Inst_EnableAdherence, INST_CLASS_ENVIRONMENT, nInstFlag::STALL),
+    tInstLibEntry<tMethod>("disable-adhere", &cHardwareCPU::Inst_DisableAdherence, INST_CLASS_ENVIRONMENT, nInstFlag::STALL),
+
     // Opinion instructions.
     // These are STALLs because opinions are only relevant with respect to time.
     tInstLibEntry<tMethod>("set-opinion", &cHardwareCPU::Inst_SetOpinion, INST_CLASS_ENVIRONMENT, nInstFlag::STALL),
@@ -9256,6 +9260,18 @@ bool cHardwareCPU::Inst_DropPheromone(cAvidaContext& ctx)
   return true;
   
 } //End Inst_DropPheromone()
+
+bool cHardwareCPU::Inst_EnableAdherence(cAvidaContext&)
+{
+    m_organism->EnableAdherence();
+    return true;
+}
+
+bool cHardwareCPU::Inst_DisableAdherence(cAvidaContext&)
+{
+    m_organism->DisableAdherence();
+    return true;
+}
 
 
 /*! Set this organism's current opinion to the value in ?BX?.

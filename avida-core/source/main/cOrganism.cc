@@ -153,6 +153,7 @@ cOrganism::cOrganism(cWorld* world, cAvidaContext& ctx, const Genome& genome, in
   , m_interface(NULL)
   , m_lineage_label(-1)
   , m_lineage(NULL)
+  , m_adherence(false) 
   , m_org_list_index(-1)
   , m_org_display(NULL)
   , m_queued_display_data(NULL)
