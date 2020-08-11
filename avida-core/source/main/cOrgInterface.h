@@ -69,6 +69,7 @@ public:
   virtual cDeme* GetDeme() = 0;
   virtual int GetClusterID() = 0; //@BK
   virtual cCluster* GetCluster() = 0; //@BK
+  virtual void SetClusterID(int id) = 0; //@BK
   virtual void SetCellID(int in_id) = 0;
   virtual void SetDemeID(int in_id) = 0;
   virtual int GetCellXPosition() = 0;

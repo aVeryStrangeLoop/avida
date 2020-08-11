@@ -2,9 +2,8 @@
 #define cCluster_h
 
 #include <vector>
-
+#include "cOrganism.h"
 class cWorld;
-class cOrganism;
 
 class cCluster
 {
@@ -21,6 +20,9 @@ public:
     int GetID() const { return _id; }
     int GetSize() const { return m_organisms.size();}
     
+    void AddOrganism(cOrganism* org);
+    void RemoveOrganism(cOrganism* org);
+    void RemoveOrgAt(int idx);    
 };
 
 #endif

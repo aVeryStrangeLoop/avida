@@ -233,6 +233,7 @@ public:
 
   int GetClusterID() { return m_interface->GetClusterID();} //@BK
   cCluster* GetCluster() { return m_interface->GetCluster();} //@BK
+  void SetClusterID(int i) { m_interface->SetClusterID(i); } //@BK
 
   int GetCellData() { return m_interface->GetCellData(); }
   int GetCellDataOrgID() { return m_interface->GetCellDataOrgID(); }
