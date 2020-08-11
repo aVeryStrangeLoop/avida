@@ -14,18 +14,18 @@
 5. Added `GetClusterID()`, `SetClusterID()` and `GetCluster()` to cTestCPUInterface.cc/h
 5. Added `GetCluster()`, `GetNumClusters()` and {`std::vector<cCluster> clusters`} to cPopulation.cc/h
 6. Added `AddOrganism()`,`RemoveOrganism()` and `RemoveOrgAt()` to cCluster.cc/h !!! Possible SEGFAULTS !!!
-
+7. Added `cluster_id` printing to cPopulation.cc. !!! Does not support Loading cluster information YET, .spop files generated won't be reloadable !!!
 
 ## TODO
-- At every instruction execution for an organism, do CheckClustering:
+- Create script to draw clusters
+- Add CLUSTERING option to avida.cfg
+- ALGORITHM (Work on this) :At every instruction execution for an organism, do CheckClustering:
     - If not in cluster, check if adhering
         - If no, do nothing
         - If yes, check faced neighbor and see if they're adhering and facing self
             - If yes, add self to faced neighbor's cluster OR create a new cluster if faced neighbor not in cluster
             - If no, do nothing
     - If in cluster, do nothing
-- "breakout" instantaneously removes org from cluster.
-- Offsprings are part of parent cluster when created.
-- Add cluster_id printing to output .spop files
+- Offsprings are ?? a part of parent cluster when created.
 - Add intra-cluster message broadcasting
 - Add intra-cluster resource sharing

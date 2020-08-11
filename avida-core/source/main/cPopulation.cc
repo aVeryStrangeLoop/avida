@@ -6265,13 +6265,15 @@ struct sOrgInfo {
   int parent_ft;
   int parent_is_teacher;
   double parent_merit;
+  // @BK Cluster number
+  int cluster_id;
   
   sOrgInfo() { ; }
   sOrgInfo(int c, int o, int l, int in_group, int in_forage, int in_bcell, int in_avcell, int in_av_bcell, int in_parent_ft, 
-          int in_parent_is_teacher, double in_parent_merit) : 
+          int in_parent_is_teacher, double in_parent_merit, int cid) : 
           cell_id(c), offset(o), lineage_label(l), curr_group(in_group), curr_forage(in_forage), birth_cell(in_bcell), 
           avatar_cell(in_avcell), av_bcell(in_av_bcell), parent_ft(in_parent_ft), parent_is_teacher(in_parent_is_teacher),
-          parent_merit(in_parent_merit) { ; }
+          parent_merit(in_parent_merit), cluster_id(cid) { ; }
 };
 
 struct sGroupInfo {
@@ -6305,10 +6307,10 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
         
         sGroupInfo* map_entry = NULL;
         if (genotype_map.Get(pg->ID(), map_entry)) {
-          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1));
+          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1,-1));
         } else {
           map_entry = new sGroupInfo(pg, true);
-          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1));
+          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1,-1));
           genotype_map.Set(pg->ID(), map_entry);
         }
       }
@@ -6333,16 +6335,16 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
         }
         if (!save_rebirth) {
           if (!save_groupings && !save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1));
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1,org->GetClusterID()));
           }
           else if (save_groupings && !save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, -1, -1, -1, 0, 1));
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, -1, -1, -1, 0, 1,org->GetClusterID()));
           }
           else if (save_groupings && save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, -1, 0, 1));          
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, -1, 0, 1, org->GetClusterID()));          
           }
           else if (!save_groupings && save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, avatar_cell, av_bcell, -1, 0, 1));                    
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, avatar_cell, av_bcell, -1, 0, 1, org->GetClusterID()));                    
           }
         }
         else if (save_rebirth) {
@@ -6350,7 +6352,7 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
           const int p_teach = (bool) (org->HadParentTeacher());
           const double p_merit = org->GetParentMerit();
           
-          map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, p_ft, p_teach, p_merit));
+          map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, p_ft, p_teach, p_merit,org->GetClusterID()));
         }
       } else {
         map_entry = new sGroupInfo(genotype);
@@ -6362,23 +6364,23 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
         const int av_bcell = org->GetPhenotype().GetAVBirthCell();
         if (!save_rebirth) {
           if (!save_groupings && !save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1));
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1,org->GetClusterID()));
           }
           else if (save_groupings && !save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, -1, -1, -1, 0, 1));
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, -1, -1, -1, 0, 1,org->GetClusterID()));
           }
           else if (save_groupings && save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, -1, 0, 1));          
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, -1, 0, 1,org->GetClusterID()));          
           }
           else if (!save_groupings && save_avatars) {
-            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, avatar_cell, av_bcell, -1, 0, 1));                    
+            map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, avatar_cell, av_bcell, -1, 0, 1,org->GetClusterID()));                    
           }
         }
         else if (save_rebirth) {
           const int p_ft = org->GetParentFT();
           const int p_teach = (bool) (org->HadParentTeacher());
           const double p_merit = org->GetParentMerit();
-          map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, p_ft, p_teach, p_merit));                  
+          map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), curr_group, curr_forage, birth_cell, avatar_cell, av_bcell, p_ft, p_teach, p_merit,org->GetClusterID()));                  
         }
         genotype_map.Set(genotype->ID(), map_entry);
       }
@@ -6405,6 +6407,7 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
     cString pforagestr;
     cString pteachstr;
     cString pmeritstr;
+    cString clusterstr; // @BK
     
     cellstr.Set("%d", cells[0].cell_id);
     offsetstr.Set("%d", cells[0].offset);
@@ -6418,11 +6421,14 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
     pforagestr.Set("%d", cells[0].parent_ft);
     pteachstr.Set("%d", cells[0].parent_is_teacher);
     pmeritstr.Set("%f", cells[0].parent_merit);
+
+    clusterstr.Set("%d",cells[0].cluster_id); //@BK
     
     for (int cell_i = 1; cell_i < cells.GetSize(); cell_i++) {
       cellstr += cStringUtil::Stringf(",%d", cells[cell_i].cell_id);
       offsetstr += cStringUtil::Stringf(",%d", cells[cell_i].offset);
       lineagestr += cStringUtil::Stringf(",%d", cells[cell_i].lineage_label);
+      clusterstr += cStringUtil::Stringf(",%d",cells[cell_i].cluster_id); //@BK
       if (!save_rebirth) {
         if (save_groupings) {
           groupstr += cStringUtil::Stringf(",%d", cells[cell_i].curr_group);
@@ -6451,6 +6457,7 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
     if (group_info->parasite) df->Write("", "Gestation (CPU) Cycle Offsets", "gest_offset");
     else df->Write(offsetstr, "Gestation (CPU) Cycle Offsets", "gest_offset");
     df->Write(lineagestr, "Lineage Label", "lineage");
+    df->Write(clusterstr,"Cluster ID", "cluster_id");
       if (!save_rebirth) {
         if (save_groupings) {
           df->Write(groupstr, "Current Group IDs", "group_id");
@@ -6509,10 +6516,10 @@ bool cPopulation::SaveStructuredSystematicsGroup(const Systematics::RoleID& role
         
         sGroupInfo* map_entry = NULL;
         if (group_map.Get(pg->ID(), map_entry)) {
-          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1));
+          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1,-1));
         } else {
           map_entry = new sGroupInfo(pg, true);
-          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1));
+          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1,-1));
           group_map.Set(pg->ID(), map_entry);
         }
       }
@@ -6525,10 +6532,10 @@ bool cPopulation::SaveStructuredSystematicsGroup(const Systematics::RoleID& role
       int offset = org->GetPhenotype().GetCPUCyclesUsed();
       sGroupInfo* map_entry = NULL;
       if (group_map.Get(group->ID(), map_entry)) {
-        map_entry->orgs.Push(sOrgInfo(cell, offset, 0, -1, -1, 0, -1, -1, -1, 0, 1));
+        map_entry->orgs.Push(sOrgInfo(cell, offset, 0, -1, -1, 0, -1, -1, -1, 0, 1,org->GetClusterID()));
       } else {
         map_entry = new sGroupInfo(group);
-        map_entry->orgs.Push(sOrgInfo(cell, offset, 0, -1, -1, 0, -1, -1, -1, 0, 1));
+        map_entry->orgs.Push(sOrgInfo(cell, offset, 0, -1, -1, 0, -1, -1, -1, 0, 1,org->GetClusterID()));
         group_map.Set(group->ID(), map_entry);
       }
     }
@@ -6609,10 +6616,10 @@ bool cPopulation::SaveFlameData(const cString& filename)
         
         sGroupInfo* map_entry = NULL;
         if (genotype_map.Get(pg->ID(), map_entry)) {
-          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1));
+          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1,-1));
         } else {
           map_entry = new sGroupInfo(pg, true);
-          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1));
+          map_entry->orgs.Push(sOrgInfo(cell, 0, -1, -1, -1, 0, -1, -1, -1, 0, 1,-1));
           genotype_map.Set(pg->ID(), map_entry);
         }
       }
@@ -6625,10 +6632,10 @@ bool cPopulation::SaveFlameData(const cString& filename)
       int offset = org->GetPhenotype().GetCPUCyclesUsed();
       sGroupInfo* map_entry = NULL;
       if (genotype_map.Get(genotype->ID(), map_entry)) {
-        map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1));
+        map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1,org->GetClusterID()));
       } else {
         map_entry = new sGroupInfo(genotype);
-        map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1));
+        map_entry->orgs.Push(sOrgInfo(cell, offset, org->GetLineageLabel(), -1, -1, 0, -1, -1, -1, 0, 1,org->GetClusterID()));
         genotype_map.Set(genotype->ID(), map_entry);
       }
     }
