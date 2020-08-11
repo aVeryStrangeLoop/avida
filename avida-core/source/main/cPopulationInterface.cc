@@ -56,6 +56,7 @@ cPopulationInterface::cPopulationInterface(cWorld* world)
 : m_world(world)
 , m_cell_id(-1)
 , m_deme_id(-1)
+, m_cluster_id(-1)
 , m_prevseen_cell_id(-1)
 , m_prev_task_cell(-1)
 , m_num_task_cells(0)
@@ -107,6 +108,10 @@ cPopulationCell* cPopulationInterface::GetCellFaced() {
 
 cDeme* cPopulationInterface::GetDeme() {
   return &m_world->GetPopulation().GetDeme(m_deme_id);
+}
+
+cCluster* cPopulationInterface::GetCluster() { //@BK
+  return &m_world->GetPopulation().GetCluster(m_cluster_id);
 }
 
 int cPopulationInterface::GetCellData() {

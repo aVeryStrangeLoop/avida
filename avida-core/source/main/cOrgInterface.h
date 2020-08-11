@@ -46,6 +46,7 @@ class cOrgSinkMessage;
 class cPopulationCell;
 class cResourceCount;
 class cString;
+class cCluster;
 
 using namespace Avida;
 
@@ -66,6 +67,8 @@ public:
   virtual cPopulationCell* GetCell(int cell_id) = 0;
   virtual int GetDemeID() = 0;
   virtual cDeme* GetDeme() = 0;
+  virtual int GetClusterID() = 0; //@BK
+  virtual cCluster* GetCluster() = 0; //@BK
   virtual void SetCellID(int in_id) = 0;
   virtual void SetDemeID(int in_id) = 0;
   virtual int GetCellXPosition() = 0;

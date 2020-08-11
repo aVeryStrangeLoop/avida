@@ -20,7 +20,7 @@ public:
     void Setup(int id,cWorld* world=NULL);
     int GetID() const { return _id; }
     int GetSize() const { return m_organisms.size();}
-
+    
 };
 
 #endif

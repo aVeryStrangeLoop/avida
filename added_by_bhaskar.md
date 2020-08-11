@@ -6,4 +6,23 @@
 4. EnableAdherence to cOrganism
 5. DisableAdherence to cOrganism
 
+## cCluster
+1. Added cCluster.h/cc skeleton (Contains a std::vector<cOrganism*>)
+2. Added GetClusterID() and GetCluster() to cOrganism.cc/h
+3. Added GetClusterID() and GetCluster() to cOrgInterface.cc/h
+4. Added GetClusterID() and GetCluster() to cPopulationInterface.cc/h
+5. Added GetCluster(), GetNumClusters() and {std::vector<cCluster> clusters} to cPopulation.cc/h
 
+## TODO
+- At every instruction execution for an organism, do CheckClustering:
+    - If not in cluster, check if adhering
+        - If no, do nothing
+        - If yes, check faced neighbor and see if they're adhering and facing self
+            - If yes, add self to faced neighbor's cluster OR create a new cluster if faced neighbor not in cluster
+            - If no, do nothing
+    - If in cluster, do nothing
+- "breakout" instantaneously removes org from cluster.
+- Offsprings are part of parent cluster when created.
+- Add cluster_id printing to output .spop files
+- Add intra-cluster message broadcasting
+- Add intra-cluster resource sharing

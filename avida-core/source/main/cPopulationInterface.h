@@ -46,6 +46,8 @@ private:
   cWorld* m_world;
   int m_cell_id;
   int m_deme_id;
+
+  int m_cluster_id; //@BK
   
   int m_prevseen_cell_id;	// Previously-seen cell's ID
   int m_prev_task_cell;		// Cell ID of previous task
@@ -72,6 +74,11 @@ public:
   int GetDemeID() { return m_deme_id; }
   //! Retrieve the deme in which this organism lives.
   cDeme* GetDeme();
+
+  int GetClusterID() { return m_cluster_id; } //@BK
+  cCluster* GetCluster(); //@BK
+  void SetClusterID(int in_id) { m_cluster_id = in_id; } //@BK
+
   void SetCellID(int in_id) { m_cell_id = in_id; }
   void SetDemeID(int in_id) { m_deme_id = in_id; }
   int GetCellXPosition();

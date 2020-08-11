@@ -57,6 +57,10 @@ public:
   cDeme* GetDeme() { return 0; }
   void SetCellID(int) { ; }
   void SetDemeID(int) { ; }
+
+  int GetClusterID() { return 01; } //@BK
+  cCluster* GetCluster() { return 0; } //@BK
+  void SetClusterID(int) {;} //@BK
   
   int GetAVCellID() { return -1; }
   void SetAVCellID(int) { ; }

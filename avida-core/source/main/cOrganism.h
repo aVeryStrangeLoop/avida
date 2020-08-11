@@ -76,7 +76,7 @@ private:
   int cclade_id;                          // @MRR Coalescence clade information (set in cPopulation)
   
   bool m_adherence;                        // @BK Adherence to form clusters (organism can form clusters if true)
-  
+
   int m_org_list_index;
   
   sOrgDisplay* m_org_display;
@@ -230,6 +230,9 @@ public:
   int GetAVCellID() { return m_interface->GetAVCellID(); }
   int GetDemeID() { return m_interface->GetDemeID(); }
   cDeme* GetDeme() { return m_interface->GetDeme(); }
+
+  int GetClusterID() { return m_interface->GetClusterID();} //@BK
+  cCluster* GetCluster() { return m_interface->GetCluster();} //@BK
 
   int GetCellData() { return m_interface->GetCellData(); }
   int GetCellDataOrgID() { return m_interface->GetCellDataOrgID(); }

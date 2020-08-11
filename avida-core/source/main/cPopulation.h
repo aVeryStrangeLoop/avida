@@ -33,7 +33,7 @@
 #include "cString.h"
 #include "cWorld.h"
 #include "tList.h"
-
+#include "cCluster.h"
 #include <fstream>
 #include <map>
 
@@ -112,7 +112,7 @@ private:
   int num_top_pred_organisms;
   
   Apto::Array<cDeme> deme_array;            // Deme structure of the population.
- 
+  std::vector<cCluster> clusters;            // @BK (Actual place where clusters are defined) 
   // Outside interactions...
   bool sync_events;   // Do we need to sync up the event list with population?
 	
@@ -300,6 +300,9 @@ public:
   int GetWorldY() const { return world_y; }
   int GetNumDemes() const { return deme_array.GetSize(); }
   cDeme& GetDeme(int i) { return deme_array[i]; }
+
+  int GetNumClusters() const { return clusters.size(); } //@BK
+  cCluster& GetCluster(int i) { return clusters[i]; } //@BK
 
   cPopulationCell& GetCell(int in_num) { assert(in_num >=0); assert(in_num < cell_array.GetSize()); return cell_array[in_num]; }
   const Apto::Array<double>& GetResources(cAvidaContext& ctx) const { return resource_count.GetResources(ctx); }
