@@ -6457,28 +6457,30 @@ bool cPopulation::SavePopulation(const cString& filename, bool save_historic, bo
     if (group_info->parasite) df->Write("", "Gestation (CPU) Cycle Offsets", "gest_offset");
     else df->Write(offsetstr, "Gestation (CPU) Cycle Offsets", "gest_offset");
     df->Write(lineagestr, "Lineage Label", "lineage");
-    df->Write(clusterstr,"Cluster ID", "cluster_id");
-      if (!save_rebirth) {
-        if (save_groupings) {
-          df->Write(groupstr, "Current Group IDs", "group_id");
-          df->Write(foragestr, "Current Forager Types", "forager_type");
-          df->Write(birthstr, "Birth Cells", "birth_cell");
-        }
-        if (save_avatars) {
-          df->Write(avatarstr, "Current Avatar Cell Locations", "avatar_cell");
-          df->Write(avatarbstr, "Avatar Birth Cell", "av_bcell");
-        }
-      }
-      else if (save_rebirth) {
+    if (m_world->GetConfig().CLUSTERING.Get()) {
+      df->Write(clusterstr,"Cluster ID", "cluster_id");
+    }
+    if (!save_rebirth) {
+      if (save_groupings) {
         df->Write(groupstr, "Current Group IDs", "group_id");
         df->Write(foragestr, "Current Forager Types", "forager_type");
         df->Write(birthstr, "Birth Cells", "birth_cell");
+      }
+      if (save_avatars) {
         df->Write(avatarstr, "Current Avatar Cell Locations", "avatar_cell");
         df->Write(avatarbstr, "Avatar Birth Cell", "av_bcell");
-        df->Write(pforagestr, "Parent forager type", "parent_ft");
-        df->Write(pteachstr, "Was Parent a Teacher", "parent_is_teach");
-        df->Write(pmeritstr, "Parent Merit", "parent_merit");
       }
+    }
+    else if (save_rebirth) {
+      df->Write(groupstr, "Current Group IDs", "group_id");
+      df->Write(foragestr, "Current Forager Types", "forager_type");
+      df->Write(birthstr, "Birth Cells", "birth_cell");
+      df->Write(avatarstr, "Current Avatar Cell Locations", "avatar_cell");
+      df->Write(avatarbstr, "Avatar Birth Cell", "av_bcell");
+      df->Write(pforagestr, "Parent forager type", "parent_ft");
+      df->Write(pteachstr, "Was Parent a Teacher", "parent_is_teach");
+      df->Write(pmeritstr, "Parent Merit", "parent_merit");
+    }
     df->Endl();
     
     delete group_info;

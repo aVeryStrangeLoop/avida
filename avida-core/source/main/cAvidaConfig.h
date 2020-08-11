@@ -474,7 +474,10 @@ public:
   CONFIG_ADD_VAR(ENABLE_MP, int, 0, "Enable multi-process Avida; 0=disabled (default),\n1=enabled.");
   CONFIG_ADD_VAR(MP_SCHEDULING_STYLE, int, 0, "Style of scheduling:\n0=non-MP aware (default)\n1=MP aware, integrated across worlds.");
 	
-  
+  // ------- Clustering @BK ---------
+  CONFIG_ADD_GROUP(CLUSTER_GROUP, "Config options for clustering");
+  CONFIG_ADD_VAR(CLUSTERING, int, 0, "Enable Clustering; 0 = disabled (default); \n1=enabled.");
+
   // -------- Deme config options --------
   CONFIG_ADD_GROUP(DEME_GROUP, "Demes and Germlines");
   CONFIG_ADD_VAR(NUM_DEMES, int, 1, "Number of independent groups in the population");
