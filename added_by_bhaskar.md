@@ -17,6 +17,7 @@
 7. Added `cluster_id` printing to cPopulation.cc. Only printed when `CLUSTERING` is set to 1.
 8. Added CLUSTERING option to avida.cfg. Read as `CLUSTERING` in cAvidaConfig.cc/h. 
 9. Added python script to draw population saves (draw_from_spop.py and draw_series.py in source/utils/draw_clusters)
+10. Added series_to_movie.ssh (requires ffmpeg) to convert series images to .mp4 movie
 
 ## TODO
 - ALGORITHM (Work on this) :At every instruction execution for an organism, do CheckClustering:

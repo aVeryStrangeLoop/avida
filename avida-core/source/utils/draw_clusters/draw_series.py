@@ -18,6 +18,6 @@ if __name__ == "__main__":
     for upd in range(start,end+1,step):
         print("Drawing population for update %d out of %d (%d/%d)" % (upd,end,((upd-start)/step) + 1,((end-start)/step) + 1))
         filename = data_folder.rstrip("/")+"/detail-"+str(upd)+".spop"
-        outfile = "output_series/img_upd_"+str(upd)+".png"
+        outfile = "output_series/frame_"+str(((upd-start)/step)+1)+".png"
         DrawPopulation(filename,w_x,w_y,outfile,upd)
 
