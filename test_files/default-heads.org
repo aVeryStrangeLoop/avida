@@ -40,8 +40,8 @@ disable-adhere      #
 nop-C      #
 nop-C      #
 nop-C      #
-nop-C      #
-nop-C      #
+send-msg      #
+retrieve-msg      #
 nop-C      #
 nop-C      #
 nop-C      #

@@ -1,5 +1,5 @@
 
-## Adherence checks
+## Adherence switch (tells if an organism is labile to clustering)
 1. `m_adherence` to cOrganism.cc/h
 2. `Inst_EnableAdherence` to cHardwareCPU.cc/h
 3. `Inst_DisableAdherence` to cHardwareCPU.cc/h
@@ -18,15 +18,9 @@
 8. Added CLUSTERING option to avida.cfg. Read as `CLUSTERING` in cAvidaConfig.cc/h. 
 9. Added python script to draw population saves (draw_from_spop.py and draw_series.py in source/utils/draw_clusters)
 10. Added series_to_movie.ssh (requires ffmpeg) to convert series images to .mp4 movie
+11. Added clustering condition to `SendMessage()` in cPopulationInterface.cc/h. Messages are now only sent within clusters!
 
 ## TODO
-- ALGORITHM (Work on this) :At every instruction execution for an organism, do CheckClustering:
-    - If not in cluster, check if adhering
-        - If no, do nothing
-        - If yes, check faced neighbor and see if they're adhering and facing self
-            - If yes, add self to faced neighbor's cluster OR create a new cluster if faced neighbor not in cluster
-            - If no, do nothing
-    - If in cluster, do nothing
-- Offsprings are ?? a part of parent cluster when created.
-- Add intra-cluster message broadcasting
-- Add intra-cluster resource sharing
+- COME UP WITH CLUSTERING ALGORITHM!
+- Later : Add resource sharing(??)
+

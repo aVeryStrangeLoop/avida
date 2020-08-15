@@ -599,7 +599,6 @@ bool cPopulationInterface::SendMessage(cOrgMessage& msg, int cellid) {
 bool cPopulationInterface::SendMessage(cOrgMessage& msg) {
   cPopulationCell& cell = m_world->GetPopulation().GetCell(m_cell_id);
   assert(cell.IsOccupied()); // This organism; sanity.
-
   if (m_world->GetConfig().USE_AVATARS.Get() == 2 && m_world->GetConfig().NEURAL_NETWORKING.Get()) {
     //assert(m_avatars);
     bool message_sent = false;
@@ -610,9 +609,28 @@ bool cPopulationInterface::SendMessage(cOrgMessage& msg) {
     }
     return message_sent;
   } else {
-    cPopulationCell* rcell = cell.ConnectionList().GetFirst();
-    assert(rcell != 0); // Cells should never be null.	
-    return SendMessage(msg, *rcell);
+    cPopulationCell* rcell = cell.ConnectionList().GetFirst(); //faced_cell
+    assert(rcell != 0); // Cells should never be null.
+    
+    if(m_world->GetConfig().CLUSTERING.Get()==0){ // If clustering is off, send msg normally
+      return SendMessage(msg, *rcell);
+    }
+    
+    else{ //If clustering is ON
+      // Send message only if rcell in same cluster
+      cOrganism* neighbor = rcell->GetOrganism();
+      if(neighbor!=nullptr){ // If neighboring cell does not contain organism message is not sent
+        if(neighbor->GetClusterID()==m_cluster_id){ //Send message only if in same cluster
+          return SendMessage(msg, *rcell);
+        }
+        else{
+          return false; // message not sent
+        }
+      }
+      else{
+        return false; //message not sent
+      }
+    }
   }
 }
 
